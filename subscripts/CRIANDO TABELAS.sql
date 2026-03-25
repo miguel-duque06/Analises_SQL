@@ -1,0 +1,60 @@
+CREATE TABLE produtos(
+  ID TEXT PRIMARY KEY,
+  Nome VARCHAR(255),
+  Descricao VARCHAR(255),
+  Preco DECIMAL(10,2),
+  Categoria VARCHAR(50)
+);
+
+CREATE TABLE colaboradores (
+  ID TEXT PRIMARY KEY,
+  Nome VARCHAR(255) NOT NULL,
+  Cargo VARCHAR(100),
+  DataContratacao DATE,
+  Telefone VARCHAR(20),
+  Email VARCHAR(100),
+  Rua VARCHAR(100) NOT NULL,
+  Bairro VARCHAR(100) NOT NULL,
+  Cidade VARCHAR(100) NOT NULL,
+  Estado VARCHAR(2) NOT NULL,
+  cep VARCHAR(8) NOT NULL
+);
+
+CREATE TABLE fornecedores(
+  ID TEXT PRIMARY KEY,
+  Nome VARCHAR(255) NOT NULL,
+  Contato VARCHAR(255),
+  Telefone VARCHAR(20),
+  Email VARCHAR(100),
+  Rua VARCHAR(100) NOT NULL,
+  Bairro VARCHAR(100) NOT NULL,
+  Cidade VARCHAR(100) NOT NULL,
+  Estado VARCHAR(2) NOT NULL,
+  cep VARCHAR(8) NOT NULL
+);
+
+CREATE TABLE clientes(
+  ID TEXT PRIMARY KEY,
+  Nome VARCHAR(255) NOT NULL,
+  Telefone VARCHAR(20),
+  Email VARCHAR(100) DEFAULT 'Sem email',
+  Endereco VARCHAR(255)
+);
+
+CREATE TABLE pedidos(
+  ID TEXT PRIMARY KEY,
+  IDCliente TEXT,
+  DataHoraPedido DATETIME,
+  Status VARCHAR(50),
+  FOREIGN KEY (IDCliente) REFERENCES clientes(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE itens_pedido(
+  IDPedido TEXT,
+  IDProduto TEXT,
+  Quantidade INTEGER,
+  PrecoUnitario DECIMAL(10,2),
+  PRIMARY KEY (IDPedido,IDProduto),
+  FOREIGN KEY (IDPedido) REFERENCES pedidos(ID) ON DELETE CASCADE,
+  FOREIGN KEY (IDPedido) REFERENCES pedidos(ID) ON DELETE CASCADE
+);
